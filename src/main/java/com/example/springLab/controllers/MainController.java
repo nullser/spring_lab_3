@@ -1,7 +1,6 @@
 package com.example.springLab.controllers;
 
 
-import com.example.springLab.classes.Cash;
 import com.example.springLab.classes.ResultOfTriangle;
 import com.example.springLab.classes.Triangle;
 import com.example.springLab.service.TriangleService;
@@ -21,28 +20,18 @@ public class MainController {
 
     private TriangleService service;
     private final Logger logger = LoggerFactory.getLogger(MainController.class);
-    private final Cash cash;
 
     @Autowired
-    public MainController(TriangleService service, Cash cash) {
+    public MainController(TriangleService service) {
         this.service = service;
-        this.cash = cash;
     }
 
     @GetMapping("/Triangle")
     public ResultOfTriangle getParameters(@RequestParam @Min(1) float sideFirst,
                                           @RequestParam @Min(1) float sideSecond,
-                                          @RequestParam @Min(1) float sideThird) throws ConstraintViolationException{
+                                          @RequestParam @Min(1) float sideThird) throws ConstraintViolationException, InterruptedException {
 
-        Triangle triangle = new Triangle(sideFirst, sideSecond, sideThird);
-
-        if (cash.isExist(triangle)) {
-            return cash.getResultOfCalculations(triangle);
-        }
-
-        ResultOfTriangle resultOfTriangle = service.calculate(triangle);
-        cash.addRectangleToCash(triangle, resultOfTriangle);
-        return resultOfTriangle;
+        return  service.calculate( new Triangle(sideFirst, sideSecond, sideThird));
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

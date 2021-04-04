@@ -6,5 +6,5 @@ import com.example.springLab.classes.Triangle;
 
 public interface TriangleService {
 
-    ResultOfTriangle calculate(Triangle triangle);
+    ResultOfTriangle calculate(Triangle triangle) throws InterruptedException;
 }

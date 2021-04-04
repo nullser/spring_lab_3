@@ -3,6 +3,7 @@ package com.example.springLab.classes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+
 @Data
 @AllArgsConstructor
 public class Triangle {
